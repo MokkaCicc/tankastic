@@ -1,34 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Tankastic
+This is a web version of the game `Tank Tactics`, inspired from this [People Make Game video](https://www.youtube.com/watch?v=aOYbR-Q_4Hs).
+
+
+## Stack
+The current stack used is:
+ - [NextJS](https://nextjs.org/) w/ Typescript
+ - [React](https://reactjs.org/)
+ - [Prisma](https://www.prisma.io/) as an ORM
+ - [SQLite](https://sqlite.org/index.html) for the database
+
 
 ## Getting Started
 
-First, run the development server:
+First, clone the project and install all dependencies:
+
+```bash
+git clone https://github.com/MokkaCicc/Tankastic
+cd Tankastic/
+npm install
+```
+
+> Make sure to have sqlite3 installed too!
+
+
+Then, create the database from the prisma migrations:
+
+```bash
+npx prisma db push
+```
+
+It will create the file `dev.db` in the `/prisma` directory.
+
+
+Lastly, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## Working with prisma
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+You can easily monitor and change the database entries with prisma studio:
 
-## Learn More
+```bash
+npx prisma studio
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:5555/](http://localhost:5555/) to access a web version of prisma studio
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+If you modify the `prisma/schema.prisma` file, you will need to create a new migration:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+npx prisma migrate dev --name [migration_name]
+```
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+> The changes will not appear in prisma studio, you will need to relaunch it
