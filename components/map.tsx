@@ -10,8 +10,8 @@ interface Props {
 
 export default function Map(props: Props) {
 	const cells = []
-	for (let col = 0; col < props.cols; col++) {
-		for (let row = 0; row < props.rows; row++) {
+	for (let row = 0; row < props.rows; row++) {
+		for (let col = 0; col < props.cols; col++) {
 			const hasTank = tankExist(props.tanks, col, row)
 			cells.push(<Cell key={`${col};${row}`} col={col} row={row} hasTank={hasTank} />)
 		}
