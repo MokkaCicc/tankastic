@@ -37,7 +37,7 @@ async function createUsers(prisma) {
 	}
 }
 
-async function createTanks(prisma, users) {
+async function createTanks(prisma) {
 	console.log("Creating tanks...")
 	for (let tank of TANKS) {
 		await prisma.tank.create({
