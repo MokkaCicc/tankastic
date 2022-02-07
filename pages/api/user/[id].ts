@@ -8,7 +8,7 @@ export default async function handler(
 	res: NextApiResponse<User>
 ) {
 	const id = Number(req.query.id)
-	const { name, email } = req.body
+	const { name, email, password } = req.body
 	const prisma = new PrismaClient()
 	const user = await prisma.user.findUnique({
 		where: {
@@ -32,7 +32,8 @@ export default async function handler(
 					},
 					data: {
 						name: name,
-						email: email
+						email: email,
+						password: password
 					}
 				})
 				res.status(200).json(updatedUser)
@@ -45,7 +46,8 @@ export default async function handler(
 					const newUser = await prisma.user.create({
 						data: {
 							name: name,
-							email: email
+							email: email,
+							password: password
 						}
 					})
 					res.status(200).json(newUser)
