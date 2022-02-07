@@ -1,51 +1,53 @@
-import { PrismaClient, User } from '@prisma/client'
+import { PrismaClient, Tank } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<User>
+	res: NextApiResponse<Tank>
 ) {
 	const id = Number(req.query.id)
 	const body = JSON.parse(req.body)
 
 	const prisma = new PrismaClient()
-	const user = await prisma.user.findUnique({
+	const tank = await prisma.tank.findUnique({
 		where: {
 			id: id
 		}
 	})
 
-	if (!user) {
-		res.status(404).end(`User With ID ${id} Not Found`)
+	if (!tank) {
+		res.status(404).end(`Tank With ID ${id} Not Found`)
 		return
 	}
 
 	switch(req.method) {
 		case 'GET':
-			res.status(200).json(user)
+			res.status(200).json(tank)
 			break
 		case 'PUT':
-			// TODO: fail if email already being used
-			const updatedUser = await prisma.user.update({
+			// TODO: fail if user don't exist
+			const updatedTank = await prisma.tank.update({
 				where: {
 					id: id
 				},
 				data: {
-					name: body.name,
-					email: body.email
+					x: body.x,
+					y: body.y,
+					user: {
+						connect: { id: body.userId }
+					}
 				}
 			})
-			res.status(200).json(updatedUser)
+			res.status(200).json(updatedTank)
 			break
 		case 'DELETE':
-			// TODO: fail if foreign key
-			const deletedUser = await prisma.user.delete({
+			const deletedTank = await prisma.tank.delete({
 			where: {
 				id: id
 				}
 			})
-			res.status(200).json(deletedUser)
+			res.status(200).json(deletedTank)
 			break
 		default:
 			res.status(405).end(`Method ${req.method} Not Allowed`)
