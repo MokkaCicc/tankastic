@@ -7,8 +7,6 @@ export default async function handler(
 	res: NextApiResponse<Tank>
 ) {
 	const id = Number(req.query.id)
-	const body = JSON.parse(req.body)
-
 	const prisma = new PrismaClient()
 	const tank = await prisma.tank.findUnique({
 		where: {
@@ -18,6 +16,7 @@ export default async function handler(
 
 	if (!tank) {
 		res.status(404).end(`Tank With ID ${id} Not Found`)
+		await prisma.$disconnect()
 		return
 	}
 
@@ -26,7 +25,18 @@ export default async function handler(
 			res.status(200).json(tank)
 			break
 		case 'PUT':
-			// TODO: fail if user don't exist
+			const body = JSON.parse(req.body)
+			const user = await prisma.user.findUnique({
+				where: {
+					id: tank.userId
+				}
+			})
+			if (!user) {
+				res.status(404).end(`User With ID ${tank.userId} Not Found`)
+				await prisma.$disconnect()
+				return
+			}
+
 			const updatedTank = await prisma.tank.update({
 				where: {
 					id: id
@@ -51,6 +61,8 @@ export default async function handler(
 			break
 		default:
 			res.status(405).end(`Method ${req.method} Not Allowed`)
-			break
+			await prisma.$disconnect()
+			return
 	}
+	await prisma.$disconnect()
 }
