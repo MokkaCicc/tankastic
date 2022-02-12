@@ -1,5 +1,6 @@
-import { PrismaClient, Tank } from '@prisma/client'
+import { Tank } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import PrismaInstance from '../../../helpers/prismaInstance'
 
 
 export default async function handler(
@@ -7,7 +8,7 @@ export default async function handler(
 	res: NextApiResponse<Tank>
 ) {
 	const id = Number(req.query.id)
-	const prisma = new PrismaClient()
+	const prisma = PrismaInstance.get()
 	const tank = await prisma.tank.findUnique({
 		where: {
 			id: id
@@ -16,7 +17,6 @@ export default async function handler(
 
 	if (!tank) {
 		res.status(404).end(`Tank With ID ${id} Not Found`)
-		await prisma.$disconnect()
 		return
 	}
 
@@ -33,7 +33,6 @@ export default async function handler(
 			})
 			if (!user) {
 				res.status(404).end(`User With ID ${tank.userId} Not Found`)
-				await prisma.$disconnect()
 				return
 			}
 
@@ -61,8 +60,6 @@ export default async function handler(
 			break
 		default:
 			res.status(405).end(`Method ${req.method} Not Allowed`)
-			await prisma.$disconnect()
 			return
 	}
-	await prisma.$disconnect()
 }

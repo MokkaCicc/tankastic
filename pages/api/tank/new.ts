@@ -1,5 +1,6 @@
-import { PrismaClient, Tank } from '@prisma/client'
+import { Tank } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import PrismaInstance from '../../../helpers/prismaInstance'
 
 
 export default async function handler(
@@ -23,7 +24,7 @@ export default async function handler(
 		res.status(400).end("The Request Body Is Missing Information: userId")
 		return
 	}
-	const prisma = new PrismaClient()
+	const prisma = PrismaInstance.get()
 	const tankUser = await prisma.user.findUnique({
 		where: {
 			id: body.userId
