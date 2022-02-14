@@ -15,4 +15,5 @@ export default async function handler(
 	const prisma = PrismaInstance.get()
 	const tanks = await prisma.tank.findMany()
 	res.status(200).json(tanks)
+	await prisma.$disconnect()
 }

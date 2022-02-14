@@ -9,6 +9,7 @@ export default async function handler(
 ) {
 	if (req.method !== 'PUT') {
 		res.status(405).end(`Method ${req.method} Not Allowed`)
+		return
 	}
 
 	const body = JSON.parse(req.body)

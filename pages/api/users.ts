@@ -15,4 +15,5 @@ export default async function handler(
 	const prisma = PrismaInstance.get()
 	const users = await prisma.user.findMany()
 	res.status(200).json(users)
+	await prisma.$disconnect()
 }
