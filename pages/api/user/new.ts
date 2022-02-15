@@ -1,6 +1,7 @@
-import { PrismaClient, User } from '@prisma/client'
+import { User } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { isEmailUsed } from '../../../helpers/api/validate'
+import PrismaInstance from '../../../helpers/prismaInstance'
 
 
 export default async function handler(
@@ -9,6 +10,7 @@ export default async function handler(
 ) {
 	if (req.method !== 'PUT') {
 		res.status(405).end(`Method ${req.method} Not Allowed`)
+		return
 	}
 
 	const body = JSON.parse(req.body)
@@ -25,7 +27,7 @@ export default async function handler(
 		return
 	}
 
-	const prisma = new PrismaClient()
+	const prisma = PrismaInstance.get()
 	const newUser = await prisma.user.create({
 		data: {
 			name: body.name,

@@ -1,6 +1,7 @@
-import { PrismaClient, User } from '@prisma/client'
+import { User } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { isEmailUsed } from '../../../helpers/api/validate'
+import PrismaInstance from '../../../helpers/prismaInstance'
 
 
 export default async function handler(
@@ -8,7 +9,7 @@ export default async function handler(
 	res: NextApiResponse<User>
 ) {
 	const id = Number(req.query.id)
-	const prisma = new PrismaClient()
+	const prisma = PrismaInstance.get()
 	const user = await prisma.user.findUnique({
 		where: {
 			id: id
@@ -20,7 +21,6 @@ export default async function handler(
 
 	if (!user) {
 		res.status(404).end(`User With ID ${id} Not Found`)
-		await prisma.$disconnect()
 		return
 	}
 
@@ -33,6 +33,7 @@ export default async function handler(
 			const body = JSON.parse(req.body)
 			if (await isEmailUsed(body.email)) {
 				res.status(409).end(`The Email ${body.email} Is Already Used`)
+				return
 			}
 
 			const updatedUser = await prisma.user.update({
@@ -50,7 +51,6 @@ export default async function handler(
 		case 'DELETE':
 			if (user.tank) {
 				res.status(409).end("The User Is Linked To A Tank")
-				await prisma.$disconnect()
 				return
 			}
 			const deletedUser = await prisma.user.delete({
@@ -62,8 +62,6 @@ export default async function handler(
 			break
 		default:
 			res.status(405).end(`Method ${req.method} Not Allowed`)
-			await prisma.$disconnect()
 			return
 	}
-	await prisma.$disconnect()
 }

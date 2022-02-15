@@ -1,5 +1,7 @@
-import { PrismaClient, User } from '@prisma/client'
+import { User } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import PrismaInstance from '../../helpers/prismaInstance'
+
 
 export default async function handler(
 	req: NextApiRequest,
@@ -10,7 +12,7 @@ export default async function handler(
 		return
 	}
 
-	const prisma = new PrismaClient()
+	const prisma = PrismaInstance.get()
 	const users = await prisma.user.findMany()
 	res.status(200).json(users)
 	await prisma.$disconnect()
