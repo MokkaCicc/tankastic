@@ -7,24 +7,20 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<Tank>
 ) {
-	if (req.method !== 'PUT') {
+	if (req.method !== 'POST') {
 		res.status(405).end(`Method ${req.method} Not Allowed`)
 		return
 	}
 
 	const body = JSON.parse(req.body)
-	if (body.x === undefined) {
-		res.status(400).end("The Request Body Is Missing Information: x")
-		return
+	const checks = ['x', 'y', 'userId']
+	for (let check of checks) {
+		if (body[check] === undefined) {
+			res.status(400).end(`The Request Body Is Missing Information: ${check}`)
+			return
+		}
 	}
-	if (body.y === undefined) {
-		res.status(400).end("The Request Body Is Missing Information: y")
-		return
-	}
-	if (body.userId === undefined) {
-		res.status(400).end("The Request Body Is Missing Information: userId")
-		return
-	}
+
 	const prisma = PrismaInstance.get()
 	const tankUser = await prisma.user.findUnique({
 		where: {
