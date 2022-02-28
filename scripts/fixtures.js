@@ -2,11 +2,11 @@ const PrismaClient = require('@prisma/client')
 
 
 const USERS = [
-	{ 'name': "Whale", 'email': "whale@tankastic.com" },
-	{ 'name': "Dog", 'email': "dog@tankastic.com" },
-	{ 'name': "Monkey", 'email': "monkey@tankastic.com" },
-	{ 'name': "Pigeon", 'email': "pigeon@tankastic.com" },
-	{ 'name': "Pelican", 'email': "pelican@tankastic.com" },
+	{ 'name': "Whale", 'email': "whale@tankastic.com", 'password': "azerty" },
+	{ 'name': "Dog", 'email': "dog@tankastic.com", 'password': "azerty" },
+	{ 'name': "Monkey", 'email': "monkey@tankastic.com", 'password': "azerty" },
+	{ 'name': "Pigeon", 'email': "pigeon@tankastic.com", 'password': "azerty" },
+	{ 'name': "Pelican", 'email': "pelican@tankastic.com", 'password': "azerty" },
 ]
 
 const TANKS = [
@@ -31,7 +31,8 @@ async function createUsers(prisma) {
 		await prisma.user.create({
 			data: {
 				'name': user.name,
-				'email': user.email
+				'email': user.email,
+				'password': user.password
 			}
 		})
 	}
@@ -57,6 +58,8 @@ async function main() {
 	await eraseDatabase(prisma)
 	await createUsers(prisma)
 	await createTanks(prisma)
+	console.log("Finished!")
+	await prisma.$disconnect()
 }
 
 main()
