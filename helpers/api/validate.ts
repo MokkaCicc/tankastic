@@ -1,7 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import PrismaInstance from "../prismaInstance";
+
 
 export async function isEmailUsed(email: string): Promise<boolean> {
-	const prisma = new PrismaClient()
+	const prisma = PrismaInstance.get()
 	const user = await prisma.user.findUnique({
 		where: {
 			email: email
