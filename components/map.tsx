@@ -1,5 +1,4 @@
 import Cell from './cell'
-import styles from '../styles/map.module.css'
 import { Tank } from '@prisma/client'
 
 interface Props {
@@ -18,8 +17,9 @@ export default function Map(props: Props) {
 	}
 
 	return (
-		<div className={styles.map}
-			style={{
+		<div className='grid gap-1 border-2 border-slate-700 m-8'
+		// HACK: maybe a better solution than that?
+		style={{
 				gridTemplateColumns: "auto ".repeat(props.cols),
 				width: (50 + 5) * props.cols - 5
 			}}
