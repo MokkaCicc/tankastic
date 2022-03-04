@@ -30,7 +30,7 @@ export default async function handler(
 			break
 
 		case 'PUT':
-			const body = JSON.parse(req.body)
+			const body = req.body
 			if (await isEmailUsed(body.email)) {
 				res.status(409).end(`The Email ${body.email} Is Already Used`)
 				return

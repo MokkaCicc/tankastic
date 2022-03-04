@@ -12,7 +12,7 @@ export default async function handler(
 		return
 	}
 
-	const body = JSON.parse(req.body)
+	const body = req.body
 	const checks = ['x', 'y', 'userId']
 	for (let check of checks) {
 		if (body[check] === undefined) {

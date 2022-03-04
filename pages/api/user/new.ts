@@ -8,12 +8,13 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse<User>
 ) {
+	console.log("Method")
 	if (req.method !== 'POST') {
 		res.status(405).end(`Method ${req.method} Not Allowed`)
 		return
 	}
 
-	const body = JSON.parse(req.body)
+	const body = req.body
 	const checks = ['name', 'email', 'password']
 	for (let check of checks) {
 		if (body[check] === undefined) {
@@ -26,6 +27,7 @@ export default async function handler(
 		return
 	}
 
+	console.log("User")
 	const prisma = PrismaInstance.get()
 	const newUser = await prisma.user.create({
 		data: {
