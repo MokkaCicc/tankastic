@@ -1,12 +1,13 @@
 const PrismaClient = require('@prisma/client')
 
 
+// All passwords are 'qwerty'
 const USERS = [
-	{ 'name': "Whale", 'email': "whale@tankastic.com", 'password': "azerty" },
-	{ 'name': "Dog", 'email': "dog@tankastic.com", 'password': "azerty" },
-	{ 'name': "Monkey", 'email': "monkey@tankastic.com", 'password': "azerty" },
-	{ 'name': "Pigeon", 'email': "pigeon@tankastic.com", 'password': "azerty" },
-	{ 'name': "Pelican", 'email': "pelican@tankastic.com", 'password': "azerty" },
+	{ 'name': "Whale", 'email': "whale@tankastic.com", 'password': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
+	{ 'name': "Dog", 'email': "dog@tankastic.com", 'password': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
+	{ 'name': "Monkey", 'email': "monkey@tankastic.com", 'password': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
+	{ 'name': "Pigeon", 'email': "pigeon@tankastic.com", 'password': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
+	{ 'name': "Pelican", 'email': "pelican@tankastic.com", 'password': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
 ]
 
 const TANKS = [
