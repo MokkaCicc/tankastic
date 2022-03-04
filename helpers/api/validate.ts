@@ -1,4 +1,4 @@
-import PrismaInstance from "../prismaInstance";
+import PrismaInstance from '../prismaInstance'
 
 
 export async function isEmailUsed(email: string): Promise<boolean> {

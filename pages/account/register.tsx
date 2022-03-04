@@ -1,8 +1,8 @@
-import NavBar from "../../components/navbar"
-import Link from "../../components/link"
-import Input from "../../components/input"
-import Button from "../../components/button"
-import Title from "../../components/title"
+import NavBar from '../../components/navbar'
+import Link from '../../components/link'
+import Input from '../../components/input'
+import Button from '../../components/button'
+import Title from '../../components/title'
 
 
 export default function Register() {
