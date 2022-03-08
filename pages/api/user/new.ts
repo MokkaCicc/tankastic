@@ -1,4 +1,5 @@
 import { User } from '@prisma/client'
+import bcrypt from 'bcryptjs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { isEmailUsed } from '../../../helpers/api/validate'
 import PrismaInstance from '../../../helpers/prismaInstance'
@@ -26,12 +27,15 @@ export default async function handler(
 		return
 	}
 
+	const salt = await bcrypt.genSalt()
+	const hash = await bcrypt.hash(body.password, salt)
+
 	const prisma = PrismaInstance.get()
 	const newUser = await prisma.user.create({
 		data: {
 			name: body.name,
 			email: body.email,
-			password: body.password
+			hash: hash
 		}
 	})
 	res.status(200).json(newUser)

@@ -3,11 +3,11 @@ const PrismaClient = require('@prisma/client')
 
 // All passwords are 'qwerty'
 const USERS = [
-	{ 'name': "Whale", 'email': "whale@tankastic.com", 'password': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
-	{ 'name': "Dog", 'email': "dog@tankastic.com", 'password': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
-	{ 'name': "Monkey", 'email': "monkey@tankastic.com", 'password': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
-	{ 'name': "Pigeon", 'email': "pigeon@tankastic.com", 'password': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
-	{ 'name': "Pelican", 'email': "pelican@tankastic.com", 'password': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
+	{ 'name': "Whale", 'email': "whale@tankastic.com", 'hash': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
+	{ 'name': "Dog", 'email': "dog@tankastic.com", 'hash': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
+	{ 'name': "Monkey", 'email': "monkey@tankastic.com", 'hash': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
+	{ 'name': "Pigeon", 'email': "pigeon@tankastic.com", 'hash': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
+	{ 'name': "Pelican", 'email': "pelican@tankastic.com", 'hash': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
 ]
 
 const TANKS = [
@@ -33,7 +33,7 @@ async function createUsers(prisma) {
 			data: {
 				'name': user.name,
 				'email': user.email,
-				'password': user.password
+				'hash': user.hash
 			}
 		})
 	}

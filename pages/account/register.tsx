@@ -1,4 +1,3 @@
-import bcrypt from 'bcryptjs'
 import { FormEvent } from 'react'
 import NavBar from '../../components/navbar'
 import Link from '../../components/link'
@@ -13,14 +12,11 @@ export default function Register() {
 			return
 		}
 
-		const salt = bcrypt.genSaltSync(10)
-		const hash = bcrypt.hashSync(event.target.password.value, salt)
-
 		await fetch('/api/user/new', {
 			body: JSON.stringify({
 				name: event.target.name.value,
 				email: event.target.email.value,
-				password: hash
+				password: event.target.password.value
 			}),
 			headers: {
 				'Content-Type': 'application/json'
