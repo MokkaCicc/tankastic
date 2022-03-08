@@ -1,12 +1,13 @@
 const PrismaClient = require('@prisma/client')
 
 
+// All passwords are 'qwerty'
 const USERS = [
-	{ 'name': "Whale", 'email': "whale@tankastic.com" },
-	{ 'name': "Dog", 'email': "dog@tankastic.com" },
-	{ 'name': "Monkey", 'email': "monkey@tankastic.com" },
-	{ 'name': "Pigeon", 'email': "pigeon@tankastic.com" },
-	{ 'name': "Pelican", 'email': "pelican@tankastic.com" },
+	{ 'name': "Whale", 'email': "whale@tankastic.com", 'hash': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
+	{ 'name': "Dog", 'email': "dog@tankastic.com", 'hash': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
+	{ 'name': "Monkey", 'email': "monkey@tankastic.com", 'hash': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
+	{ 'name': "Pigeon", 'email': "pigeon@tankastic.com", 'hash': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
+	{ 'name': "Pelican", 'email': "pelican@tankastic.com", 'hash': "$2a$10$CJKwf9y4pdxF.29F.7ynZ.OBRn3KZuyogDnAzn/9oZy/hVyPdFraq" },
 ]
 
 const TANKS = [
@@ -31,7 +32,8 @@ async function createUsers(prisma) {
 		await prisma.user.create({
 			data: {
 				'name': user.name,
-				'email': user.email
+				'email': user.email,
+				'hash': user.hash
 			}
 		})
 	}
@@ -57,6 +59,8 @@ async function main() {
 	await eraseDatabase(prisma)
 	await createUsers(prisma)
 	await createTanks(prisma)
+	console.log("Finished!")
+	await prisma.$disconnect()
 }
 
 main()
