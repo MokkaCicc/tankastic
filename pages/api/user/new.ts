@@ -1,4 +1,3 @@
-import { User } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { isEmailUsed } from '../../../helpers/api/validate'
@@ -7,7 +6,7 @@ import PrismaInstance from '../../../helpers/prismaInstance'
 
 export default async function handler(
 	req: NextApiRequest,
-	res: NextApiResponse<User>
+	res: NextApiResponse
 ) {
 	if (req.method !== 'POST') {
 		res.status(405).end(`Method ${req.method} Not Allowed`)
@@ -36,6 +35,11 @@ export default async function handler(
 			name: body.name,
 			email: body.email,
 			hash: hash
+		}, 
+		select: {
+			id: true,
+			email: true,
+			name: true
 		}
 	})
 	res.status(200).json(newUser)
